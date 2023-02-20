@@ -37,17 +37,17 @@ public class IdeeController {
 
     @ApiOperation(value = "Ajout d'idée")
     @PostMapping("/ajouter/{id_user}/{id_ministere}")
-    public String add(@RequestBody Idee idee, @PathVariable("id_user") Long id_user, @PathVariable("id_ministere") Long id_ministere) {
+    public ResponseEntity<Object> add(@RequestBody Idee idee, @PathVariable("id_user") Long id_user, @PathVariable("id_ministere") Long id_ministere) {
         try {
             User user = userRepository.findById(id_user).get();
             Ministere ministere = ministereRepository.findById(id_ministere).get();
             idee.setUser(user);
             idee.setMinistere(ministere);
 
-            return ideeService.add(idee, user, ministere);
+            return ResponseHandler.generateResponse("OK", HttpStatus.OK, ideeService.add(idee, user, ministere));
 
         } catch (Exception e) {
-            return "Veuillez utilisez des mots approprié";
+            return ResponseHandler.generateResponse("Non OK", HttpStatus.FORBIDDEN, "Veuillez utilisez des mots approprié");
         }
 
     }

@@ -68,7 +68,7 @@ public class FichierVocalServiceImpl implements FichierVocalService {
 
         List<FichierVocal> fichierVocals =fichierVocalRepository.findAll();
         List<FichierVocal> fichierVocals1 = new ArrayList<>();
-        for(FichierVocal fich:fichierVocals1){
+        for(FichierVocal fich:fichierVocals){
             if(fich.getMinistere().getLibelle().equals(libelle)){
                 fichierVocals1.add(fich);
             }

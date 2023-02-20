@@ -1,10 +1,7 @@
 package com.sy.backEndApiAkilina.controllers;
 
 import com.sy.backEndApiAkilina.configuration.ResponseMessage;
-import com.sy.backEndApiAkilina.models.Commentaire;
-import com.sy.backEndApiAkilina.models.ERole;
-import com.sy.backEndApiAkilina.models.Idee;
-import com.sy.backEndApiAkilina.models.User;
+import com.sy.backEndApiAkilina.models.*;
 import com.sy.backEndApiAkilina.repository.CommentaireRepository;
 import com.sy.backEndApiAkilina.repository.IdeeRepository;
 import com.sy.backEndApiAkilina.repository.RoleRepository;
@@ -42,16 +39,16 @@ public class CommentaireController {
 
     @ApiOperation(value = "Ajout de commentaire")
     @PostMapping("/ajouter/{id_user}/{id_idee}")
-    public String add(@RequestBody Commentaire commentaire, @PathVariable("id_user") Long id_user, @PathVariable("id_idee") Long id_idee) {
+    public ResponseEntity<Object>  add(@RequestBody Commentaire commentaire, @PathVariable("id_user") Long id_user, @PathVariable("id_idee") Long id_idee) {
        try {
         User user= userRepository.findById(id_user).get();
         Idee idee = ideeRepository.findById(id_idee).get();
         commentaire.setIdee(idee);
         commentaire.setUser(user);
+           return ResponseHandler.generateResponse("OK", HttpStatus.OK, commentaireService.add(commentaire, user, idee));
 
-        return commentaireService.add(commentaire, user, idee);
-    }catch (Exception e){
-           return e.getMessage();
+       }catch (Exception e){
+           return ResponseHandler.generateResponse("Non OK", HttpStatus.FORBIDDEN, "Veuillez utilisez des mots approprié");
        }
     }
 
