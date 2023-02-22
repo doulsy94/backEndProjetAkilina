@@ -29,7 +29,7 @@ public class User {
     private Long id_user;
 
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 100)
     private String username;
 
     @Size(max = 50)
@@ -37,7 +37,7 @@ public class User {
     private String email;
 
     @NotBlank
-    @Size(max = 12)
+    @Size(min = 8, max = 8)
     private String numero;
 
     private String addresse;
@@ -46,25 +46,23 @@ public class User {
 
 
     @NotBlank
-    @Size(max=120)
     private String password;
 
     @NotBlank
-    @Size(max=120)
     private String confirmPassword;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY )
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY )
     @JoinTable(name = "users_liked_idee",
             uniqueConstraints = @UniqueConstraint(name = "false", columnNames = {"liked_idee_id_idee"}),
             joinColumns = @JoinColumn(name = "user_id_user",unique = false),
             inverseJoinColumns = @JoinColumn(name = "liked_idee_id_idee",unique = false))
     private List<Idee> likedIdee;
 
-    @JsonIgnore
+/*    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY )
 
-    private List<Idee> dislikedIdee;
+    private List<Idee> dislikedIdee;*/
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",

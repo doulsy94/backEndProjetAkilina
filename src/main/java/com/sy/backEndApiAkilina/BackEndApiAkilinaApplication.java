@@ -49,7 +49,7 @@ public class BackEndApiAkilinaApplication implements CommandLineRunner {
 			Set<Role> roles = new HashSet<>();
 			Role role = roleRepository.findByName(ERole.ROLE_ADMIN);
 			roles.add(role);
-			User useradmin = new User("admin","doul@gmail.com","94218444","Faladie",encoder.encode( "12345678"), encoder.encode("12345678"));
+			User useradmin = new User("Administrateur","doulsy2021@gmail.com","94218444","Faladie",encoder.encode( "12345678"), encoder.encode("12345678"));
 			useradmin.setRoles(roles);
 			userRepository.save(useradmin);
 

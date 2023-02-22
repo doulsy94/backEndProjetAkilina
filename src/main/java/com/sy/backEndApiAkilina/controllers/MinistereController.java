@@ -34,14 +34,14 @@ public class MinistereController {
     @PostMapping("/ajouter")
 
     public Object add(@RequestParam(value = "ministere") String minis,
-                      @RequestParam(value = "file", required = true) MultipartFile file) {
+                      @RequestParam(value = "file", required = false) MultipartFile file) {
         Role role = roleRepository.findByName(ERole.ROLE_ADMIN);
         User admin = userRepository.findByRoles(role);
         try {
             Ministere ministere = new JsonMapper().readValue(minis, Ministere.class);
             if (file != null) {
                 System.out.println("ggggg");
-                ministere.setImage(SaveImage.save("minstere", file, file.getOriginalFilename()));
+                ministere.setImage(SaveImage.save("minstere", file, ministere.getLibelle()+".png"));
             }
             ministere.setUser(admin);
             return ministereService.add(ministere);
@@ -97,7 +97,7 @@ public class MinistereController {
             Ministere ministere = new JsonMapper().readValue(minis, Ministere.class);
             if (file != null) {
                 System.out.println("ggggg");
-                ministere.setImage(SaveImage.save("ministere", file, ministere.getLibelle()));
+                ministere.setImage(SaveImage.save("ministere", file, ministere.getLibelle()+".png"));
             }
             return ministereService.update(id_ministere, ministere);
 
@@ -113,6 +113,7 @@ public class MinistereController {
         try {
             Ministere ministere = ministereRepository.findById(id_ministere).get();
             if (ministere.getUser().getId_user() == id_user) {
+
                 return ministereService.delete(id_ministere);
             } else {
                 return "vous n'etes pas autorisé à faire cette action";

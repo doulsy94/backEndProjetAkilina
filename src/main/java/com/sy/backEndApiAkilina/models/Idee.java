@@ -25,7 +25,7 @@ public class Idee {
 
     private int likes;
 
-    private int dislikes;
+   //  private int dislikes;
 
 
 

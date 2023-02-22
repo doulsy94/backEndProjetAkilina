@@ -1,10 +1,14 @@
 package com.sy.backEndApiAkilina.serviceImpl;
 
+import com.sy.backEndApiAkilina.configuration.SaveImage;
 import com.sy.backEndApiAkilina.models.Ministere;
 import com.sy.backEndApiAkilina.repository.MinistereRepository;
 import com.sy.backEndApiAkilina.security.services.MinistereService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +44,17 @@ public class MinistereServiceImpl implements MinistereService {
     }
     @Override
     public String delete(Long id_ministere) {
-        ministereRepository.deleteById(id_ministere);
+       Ministere ministere = ministereRepository.findById(id_ministere).get();
+
+       try {
+
+           Files.deleteIfExists(Paths.get(SaveImage.Categorielocation + "/"+ ministere.getLibelle() + ".png"));
+
+           ministereRepository.deleteById(id_ministere);
+       }catch (Exception e){
+
+       }
+
         return "Ministère supprimé avec succès";
     }
 

@@ -1,6 +1,8 @@
 package com.sy.backEndApiAkilina.configuration;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,11 +15,15 @@ public class SaveImage {
     public static String serveruser = localhost + "apiakilina/images/utilisateur/";
     public static String servercategorie = localhost + "apiakilina/images/categorie/";
 
+    public static String serverimagedefaut = localhost + "apiakilina/images/imagedefaut/";
+
     public static String servervocal = localhost + "apiakilina/vocal/categorie/";
 
     public static String Vocallocation = "C:/xampp/htdocs/apiakilina/vocal/categorie";
     public static String Categorielocation = "C:/xampp/htdocs/apiakilina/images/categorie";
     public static String Userlocation = "C:/xampp/htdocs/apiakilina/images/utilisateur";
+
+    public static final File TEMP_USER = new File("src/main/resources/static/avatare.png");
 
     public static String save(String typeImage, MultipartFile file, String nomFichier) {
         String src = "";

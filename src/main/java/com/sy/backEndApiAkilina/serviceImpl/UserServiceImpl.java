@@ -1,5 +1,6 @@
 package com.sy.backEndApiAkilina.serviceImpl;
 
+import com.sy.backEndApiAkilina.configuration.SaveImage;
 import com.sy.backEndApiAkilina.models.Ministere;
 import com.sy.backEndApiAkilina.models.User;
 import com.sy.backEndApiAkilina.repository.UserRepository;
@@ -77,7 +78,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String delete(Long id_user) {
-        userRepository.deleteById(id_user);
+        try {
+            Files.deleteIfExists(Paths.get(SaveImage.Userlocation + "/"+ id_user + ".png"));
+            userRepository.deleteById(id_user);
+        }catch (Exception e){
+
+        }
+
         return "Utilisateur supprimé avec succès";
     }
 

@@ -1,5 +1,6 @@
 package com.sy.backEndApiAkilina.controllers;
 
+import com.sy.backEndApiAkilina.configuration.SaveImage;
 import com.sy.backEndApiAkilina.models.ERole;
 import com.sy.backEndApiAkilina.models.Role;
 import com.sy.backEndApiAkilina.models.User;
@@ -32,6 +33,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -98,11 +103,11 @@ public class AuthController {
     @ApiOperation(value = "Creation de compte de l'utilisateur")
     @PostMapping("signup")
     public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
-        if (userRepository.existsByUsername(signupRequest.getUsername())) {
+       /* if (userRepository.existsByUsername(signupRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Erreur: Nom d'utilisateur déjà pris!"));
-        }
+        }*/
         if (userRepository.existsByEmail(signupRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
@@ -152,7 +157,20 @@ public class AuthController {
             }
             user.setRoles(roles);
             userRepository.save(user);
-            mailSender.send(emailConstructor.constructNewUserEmail(user));
+
+            byte[] bytes;
+            try {
+                bytes = Files.readAllBytes(SaveImage.TEMP_USER.toPath());
+                String fileName = user.getId_user() + ".png";
+                Path path = Paths.get(SaveImage.Userlocation+"/"+ fileName);
+                Files.write(path, bytes);
+                user.setImageuser(serveruser+fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            userRepository.save(user);
+
+          //  mailSender.send(emailConstructor.constructNewUserEmail(user));
 
             return ResponseEntity.ok(new MessageResponse("Utilisateur enrégistrer avec succès"));
         } else {
