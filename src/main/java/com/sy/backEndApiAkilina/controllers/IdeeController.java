@@ -67,17 +67,23 @@ public class IdeeController {
 
     @ApiOperation(value = "Modifier idée de l'utilisateur")
     @PostMapping("/modifier/{id_idee}/{id_user}")
-    public String update(@PathVariable Long id_idee, @PathVariable Long id_user, @RequestBody Idee idee) {
+    public ResponseEntity<Object> update(@PathVariable Long id_idee, @PathVariable Long id_user, @RequestBody Idee idee) {
         try {
             Idee idee1 = ideeRepository.findById(id_idee).get();
 
             if (idee1.getUser().getId_user() == id_user) {
-                return ideeService.update(id_idee, idee);
+
+                return ResponseHandler.generateResponse("OK", HttpStatus.OK, ideeService.update(id_idee, idee));
+
+                //return ideeService.update(id_idee, idee);
             } else {
-                return "vous n'etes pas autorisé à faire cette action";
+               // return "vous n'etes pas autorisé à faire cette action";
+                return ResponseHandler.generateResponse("Non OKK", HttpStatus.NOT_FOUND, "Vous n'etes pas autoriser");
+
             }
         } catch (Exception e) {
-            return e.getMessage();
+            return ResponseHandler.generateResponse("Non OK", HttpStatus.FORBIDDEN, "Veuillez utilisez des mots approprié");
+
         }
 
     }

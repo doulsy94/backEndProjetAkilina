@@ -65,16 +65,22 @@ public class CommentaireController {
 
     @ApiOperation(value = "Modification des commentaires par id")
     @PostMapping ("/modifier/{id_commentaire}/{id_user}")
-    public String update(@PathVariable(value = "id_commentaire") Long id_commentaire, @PathVariable("id_user") Long id_user, @RequestBody Commentaire commentaire){
+    public ResponseEntity<Object> update(@PathVariable(value = "id_commentaire") Long id_commentaire, @PathVariable("id_user") Long id_user, @RequestBody Commentaire commentaire){
        try {
            Commentaire commentaire1 = commentaireRepository.findById(id_commentaire).get();
            if (commentaire1.getUser().getId_user() == id_user) {
-               return commentaireService.update(id_commentaire, commentaire);
+               return ResponseHandler.generateResponse("OK", HttpStatus.OK, commentaireService.update(id_commentaire, commentaire));
+
+               // return commentaireService.update(id_commentaire, commentaire);
            }else {
-               return "vous n'etes pas autorisé à faire cette action";
+               // return "vous n'etes pas autorisé à faire cette action";
+               return ResponseHandler.generateResponse("Non OKK", HttpStatus.NOT_FOUND, "Vous n'etes pas autoriser");
+
            }
        }catch (Exception e){
-           return "heloooo";
+           // return "heloooo";
+           return ResponseHandler.generateResponse("Non OK", HttpStatus.FORBIDDEN, "Veuillez utilisez des mots approprié");
+
        }
 
     }
@@ -113,6 +119,14 @@ public class CommentaireController {
             return e.getMessage();
         }
     }
+
+    @ApiOperation(value = "Affichage du nombre de commentaires par Id idee")
+    @GetMapping("/afficherNombreCommentaireParIdIdee/{id_idee}")
+    public int readNombre1(@PathVariable long id_idee) {
+            Idee idee = ideeRepository.findById(id_idee);
+            System.out.println(idee);
+            return commentaireService.AfficherCommentaireParIdIdee(idee).size();
+        }
 
     @ApiOperation(value = "LIRE COMMENTAIRE Par ID")
     @GetMapping("/lireParId/{id_commentaire}")
