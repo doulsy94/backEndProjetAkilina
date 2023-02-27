@@ -1,4 +1,4 @@
-package com.sy.backEndApiAkilina.models;
+package com.sy.backEndApiAkilina.configuration;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

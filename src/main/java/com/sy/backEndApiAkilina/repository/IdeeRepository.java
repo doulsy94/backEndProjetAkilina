@@ -17,6 +17,7 @@ public interface IdeeRepository extends JpaRepository <Idee, Long>{
 
     Idee findById(long id_idee);
 
+
     @Query(value = "SELECT COUNT(user_id_user) FROM users_liked_idee ul WHERE ul.user_id_user =:id_user AND ul.liked_idee_id_idee =:id_idee ",nativeQuery = true)
     int nombreLikeParUtilisateurSurIde(Long id_user, Long id_idee);
 

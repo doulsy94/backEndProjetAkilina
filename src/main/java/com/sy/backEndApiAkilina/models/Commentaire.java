@@ -16,7 +16,7 @@ public class Commentaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_commentaire;
-
+    @Lob
     private String contenu_commentaire;
 
     //private boolean etat = true;

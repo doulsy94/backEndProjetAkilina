@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.*;
 
+import static com.sy.backEndApiAkilina.configuration.SaveImage.serveruser;
+
 @SpringBootApplication
 @AllArgsConstructor
 public class BackEndApiAkilinaApplication implements CommandLineRunner {
@@ -66,6 +68,13 @@ public class BackEndApiAkilinaApplication implements CommandLineRunner {
 		grosmots.add(new BadWord(null, "imbecile"));
 		grosmots.add(new BadWord(null, "clochard"));
 		grosmots.add(new BadWord(null, "con"));
+		grosmots.add(new BadWord(null, "merde"));
+		grosmots.add(new BadWord(null, "fou"));
+		grosmots.add(new BadWord(null, "bordel"));
+		grosmots.add(new BadWord(null, "batard"));
+		grosmots.add(new BadWord(null, "pute"));
+		grosmots.add(new BadWord(null, "inconscient"));
+		grosmots.add(new BadWord(null, "blakoro"));
 
 		if (badwordRepository.findAll().size() == 0)
 		badwordRepository.saveAll(grosmots);

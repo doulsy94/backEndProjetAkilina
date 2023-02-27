@@ -18,11 +18,16 @@ public class Ministere {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_ministere;
 
+
     @Column(unique = true)
+    @Lob
     private String libelle;
 
+
+    @Lob
     private String description;
 
+    @Lob
     private String image;
 
     @JsonIgnore

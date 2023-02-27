@@ -19,6 +19,7 @@ public class Idee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_idee;
 
+    @Lob
     private String contenu_idee;
 
     private Date date;

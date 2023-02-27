@@ -1,5 +1,6 @@
 package com.sy.backEndApiAkilina.controllers;
 
+import com.sy.backEndApiAkilina.configuration.ResponseHandler;
 import com.sy.backEndApiAkilina.models.*;
 import com.sy.backEndApiAkilina.repository.*;
 import com.sy.backEndApiAkilina.security.services.CommentaireService;
