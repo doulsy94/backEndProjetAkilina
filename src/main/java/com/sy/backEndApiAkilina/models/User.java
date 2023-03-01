@@ -54,7 +54,7 @@ public class User {
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY )
     @JoinTable(name = "users_liked_idee",
-            uniqueConstraints = @UniqueConstraint(name = "false", columnNames = {"liked_idee_id_idee"}),
+           // uniqueConstraints = @UniqueConstraint(name = "false", columnNames = {"liked_idee_id_idee"}),
             joinColumns = @JoinColumn(name = "user_id_user",unique = false),
             inverseJoinColumns = @JoinColumn(name = "liked_idee_id_idee",unique = false))
     private List<Idee> likedIdee;

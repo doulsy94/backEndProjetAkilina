@@ -24,6 +24,9 @@ public class Idee {
 
     private Date date;
 
+    @JsonIgnore
+    @ManyToMany( mappedBy = "likedIdee", cascade = CascadeType.ALL)
+    private List<User> likedUser;
     private int likes;
 
    //  private int dislikes;
